@@ -3,8 +3,9 @@ from django.db import models
 
 User = get_user_model()
 
+
 class Group(models.Model):
-    
+
     title = models.CharField(
         max_length=200,
         verbose_name='Заголовок')
@@ -22,6 +23,7 @@ class Group(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Post(models.Model):
 
@@ -47,6 +49,8 @@ class Post(models.Model):
         null=True,
         verbose_name='Картинка',
     )
+
+
     def __str__(self):
         return self.text
 
@@ -71,6 +75,8 @@ class Comment(models.Model):
         auto_now_add=True,
         db_index=True
     )
+
+
     class Meta:
         verbose_name = 'Коментарий'
         verbose_name_plural = 'Коментарии'
@@ -78,8 +84,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
-    
-    
+  
+
 class Follow(models.Model):
 
     user = models.ForeignKey(
@@ -92,6 +98,7 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
         verbose_name='Подписан',)
+
 
     class Meta:
         constraints = (
