@@ -3,8 +3,28 @@ from django.db import models
 
 User = get_user_model()
 
+class Group(models.Model):
+    
+    title = models.CharField(
+        max_length=200,
+        verbose_name='Заголовок')
+    slug = models.SlugField(
+        unique=True,
+        verbose_name='slug')
+    description = models.TextField(
+        verbose_name='Описание'
+    )
+
+    class Meta:
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
+        ordering = ('id',)
+
+    def __str__(self):
+        return self.title
 
 class Post(models.Model):
+
     text = models.TextField()
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     author = models.ForeignKey(
@@ -32,6 +52,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -58,26 +79,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
     
-class Group(models.Model):
-    title = models.CharField(
-        max_length=200,
-        verbose_name='Заголовок')
-    slug = models.SlugField(
-        unique=True,
-        verbose_name='slug')
-    description = models.TextField(
-        verbose_name='Описание'
-    )
-
-    class Meta:
-        verbose_name = 'Группа'
-        verbose_name_plural = 'Группы'
-        ordering = ('id',)
-
-    def __str__(self):
-        return self.title
     
 class Follow(models.Model):
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
