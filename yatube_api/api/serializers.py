@@ -17,7 +17,11 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    author = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field="username"
+    )
+
 
     class Meta:
         model = Comment
@@ -54,4 +58,3 @@ class FollowSerializer(serializers.ModelSerializer):
                 "Вы не можете подписаться на себя."
             )
         return value
-

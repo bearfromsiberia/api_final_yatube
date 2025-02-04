@@ -8,17 +8,14 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj, *args, **kwargs):
-        """
-        Позволяем доступ к объекту, если пользователь автор поста
-        или использует безопасные методы.
-        """
-        return obj.author == request.user or request.method in permissions.SAFE_METHODS
+
+        return (obj.author == request.user or 
+            request.method in permissions.SAFE_METHODS)
+
 
 
 class IsFollowing(permissions.BasePermission):
-    """
-    Разрешение, которое позволяет пользователю подписываться на других пользователей.
-    """
+
 
     def has_permission(self, request, view):
         """Разрешаем доступ, если пользователь аутентифицирован."""
