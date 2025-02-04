@@ -76,12 +76,12 @@ class Follow(models.Model):
     )
     following = models.ForeignKey(
         User,
-        related_name="followers",  # Имя обратной связи для получения подписчиков
-        on_delete=models.CASCADE,  # Удаляем подписки, если пользователь удален
+        related_name="followers",
+        on_delete=models.CASCADE,
     )
 
     class Meta:
-        unique_together = ("user", "following")  # Уникальная пара (user, following)
+        unique_together = ("user", "following")
 
     def __str__(self):
         """

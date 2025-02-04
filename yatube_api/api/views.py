@@ -238,4 +238,3 @@ class FollowViewSet(viewsets.GenericViewSet):
             },
             status=status.HTTP_201_CREATED
         )
-# Удалены ненужные методы (retrieve, partial_update, destroy) для соответствия требованиям

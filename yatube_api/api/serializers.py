@@ -32,10 +32,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source="user.username", read_only=True)
+    user = serializers.CharField(
+        source="user.username",
+        read_only=True
+    )
     following = serializers.CharField(
         source="following.username",
-        read_only=True,
+        read_only=True
     )
 
     class Meta:
@@ -47,5 +50,8 @@ class FollowSerializer(serializers.ModelSerializer):
         Проверяем, что пользователь не может подписаться на самого себя.
         """
         if self.context["request"].user == value:
-            raise serializers.ValidationError("Вы не можете подписаться на себя.")
+            raise serializers.ValidationError(
+                "Вы не можете подписаться на себя."
+            )
         return value
+
