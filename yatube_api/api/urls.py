@@ -1,25 +1,32 @@
-from django.urls import include, path
-from rest_framework import routers
-from django.views.generic import TemplateView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import (PostViewSet, FollowViewSet,
+                    CommentViewSet, GroupViewSet)
+from rest_framework_simplejwt import views
 
-from .views import (CommentViewSet, FollowViewSet, GroupViewSet,
-                    PostViewSet, UserViewSet)
-
-router_v1 = routers.DefaultRouter()
-router_v1.register(r'posts', PostViewSet)
-router_v1.register(r'users', UserViewSet)
-router_v1.register(r'groups', GroupViewSet)
-router_v1.register(r'follow', FollowViewSet)
-router_v1.register(r'posts/(?P<post_id>\d+)/comments',
-                   CommentViewSet, basename='comments')
-
+router = DefaultRouter()
+router.register(r'posts', PostViewSet, basename='post')
+router.register(
+    r'posts/(?P<post_id>\d+)/comments',
+    CommentViewSet,
+    basename='comment'
+)
+router.register(r'groups', GroupViewSet, basename='group')
+router.register(r'follow', FollowViewSet, basename='follow')
 
 urlpatterns = [
-    path('api/v1/', include(router_v1.urls)),
-    path('api/v1/', include('djoser.urls.jwt')),
+    path('', include(router.urls)),
     path(
-        'redoc/',
-        TemplateView.as_view(template_name='redoc.html'),
-        name='redoc'
+        'jwt/create/',
+        views.TokenObtainPairView.as_view(),
+        name='token_obtain_pair'
     ),
+    path(
+        'jwt/refresh/',
+        views.TokenRefreshView.as_view(),
+        name='token_refresh'
+    ),
+    path('jwt/verify/', views.TokenVerifyView.as_view(),
+         name='token_verify'),
+    path('djoser/', include('djoser.urls')),  # Добавляем URL для Djoser
 ]
