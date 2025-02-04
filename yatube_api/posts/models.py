@@ -50,7 +50,6 @@ class Post(models.Model):
         verbose_name='Картинка',
     )
 
-
     def __str__(self):
         return self.text
 
@@ -76,7 +75,6 @@ class Comment(models.Model):
         db_index=True
     )
 
-
     class Meta:
         verbose_name = 'Коментарий'
         verbose_name_plural = 'Коментарии'
@@ -84,7 +82,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
-  
+
 
 class Follow(models.Model):
 
@@ -98,7 +96,6 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
         verbose_name='Подписан',)
-
 
     class Meta:
         constraints = (
